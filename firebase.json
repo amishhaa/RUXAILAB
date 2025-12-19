@@ -1,99 +1,64 @@
-{
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "functions": {
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run lint"
-    ],
-    "source": "functions",
-    "runtimes": "python312"
-  },
-  "hosting": [
     {
-      "site": "ruxailab-stage",
-      "public": "dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
+      "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+      },
+      "functions": [
         {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
-      "site": "ruxailab-dev",
-      "public": "dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
+          "predeploy": [
+            "npm --prefix \"$RESOURCE_DIR\" run lint"
+          ],
+          "source": "functions",
+          "codebase": "functions"
+        },
         {
-          "source": "**",
-          "destination": "/index.html"
+          "source": "weight_function",
+          "codebase": "weight_function",
+          "ignore": [
+            "venv",
+            ".git",
+            "firebase-debug.log",
+            "firebase-debug.*.log"
+          ]
         }
-      ]
-    },
-    {
-      "site": "ruxailab-develop",
-      "public": "dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
       ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
+      "hosting": {
+        "site": "ruxailab-dev",
+        "public": "dist",
+        "ignore": [
+          "firebase.json",
+          "**/.*",
+          "**/node_modules/**"
+        ],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
+        ]
+      },
+      "emulators": {
+        "auth": {
+          "port": 9099
+        },
+        "functions": {
+          "port": 5001
+        },
+        "firestore": {
+          "port": 8081
+        },
+        "hosting": {
+          "port": 5000
+        },
+        "ui": {
+          "enabled": true
+        },
+        "singleProjectMode": true,
+        "storage": {
+          "port": 9199
         }
-      ]
-    },
-    {
-      "site": "ruxailab-prod",
-      "public": "dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      },
+      "storage": {
+        "rules": "storage.rules"
+      }
     }
-  ],
-  "emulators": {
-    "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5002
-    },
-    "firestore": {
-      "port": 8081
-    },
-    "hosting": {
-      "port": 5001
-    },
-    "ui": {
-      "enabled": true
-    },
-    "singleProjectMode": true,
-    "storage": {
-      "port": 9199
-    }
-  },
-  "storage": {
-    "rules": "storage.rules"
-  }
-}

@@ -4,7 +4,8 @@
     "dev": "retlab-dev",
     "production": "retlab",
     "prod": "ruxailab-prod",
-    "develop": "ruxailab-develop"
+    "develop": "ruxailab-develop",
+    "staging": "ruxailab-gsoc-7ec24"
   },
   "targets": {
     "retlab-dev": {
